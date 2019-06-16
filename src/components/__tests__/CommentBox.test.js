@@ -4,6 +4,7 @@ import {mount} from 'enzyme';
  
 
 let wrapped;
+const textMessage = 'some text';
 
 beforeEach(()=>{
     wrapped = mount(<CommentBox/>);
@@ -14,16 +15,26 @@ it('has a textbox and a button',()=>{
     expect(wrapped.find('button').length).toEqual(1);
 });
 
-it('has a text area that users can type in',()=>{
-    const comment = 'some comment';
-    wrapped.find('textarea').simulate('change',{
-        target:{value:comment}
+describe('the text area', ()=>{
+    beforeEach(()=>{
+        wrapped.find('textarea').simulate('change', {
+            target:{value:textMessage}
+        });
+        wrapped.update();
+    })
+    it('has a text area that users can type in',()=>{
+        expect(wrapped.find('textarea').prop('value')).toEqual(textMessage);
+
     });
-    wrapped.update();
-    expect(wrapped.find('textarea').prop('value')).toEqual(comment);
+    it('has text area that empties after submitting',()=>{
+        expect(wrapped.find('textarea').prop('value')).toEqual(textMessage);
+        wrapped.find('form').simulate('submit');
+        wrapped.update();
+        expect(wrapped.find('textarea').prop('value')).toEqual('');
 
+    });
 });
-
+ 
 afterEach(() => {
     wrapped.unmount(); 
 });
