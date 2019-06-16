@@ -1,7 +1,7 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
-import CommentBox from './CommentBox'; 
-import CommentList from './CommentList';
+import CommentBox from 'components/CommentBox'; 
+import CommentList from 'components/CommentList';
 
 class App extends React.Component{
 
